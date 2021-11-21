@@ -1,0 +1,318 @@
+
+---
+title: "exercise"
+output: html_notebook
+```{r} 
+list(list(name="egg",number="2dozens"),list(name="milk",number="1liter"),list(name="vegetable",number="2kinds"))#shoppingList3.1
+```
+
+```{r}
+list(list(coursename="principlesofeconomics",time="wednesdaymorning",place="socialsciencebuilding"),list(coursename="sighttranslation",time="thursdayafternoon",place="humanitybuilding"))#course3.1
+```
+
+```{r}
+concerts_sampled <- concerts_obo[c(3,5)] 
+firstShowInfo <- concerts_obo[[2]][["showInfo"]][[1]][c("time","location")]
+```
+
+```{r}
+concerts_obo[[3]]$showInfo[[1]][c(1, 2)] <- list(location="taichungoperahouse",time="01312022 19:30:00")
+```
+
+```{r}
+JohnsFamilyCopy3 <- JohnsFamily
+JohnsFamilyCopy3$children[3] <- "newborn"
+```
+```{r}
+concerts_obo <- concerts_obo[-c(2,5,7)]
+```
+
+```{r}
+JohnsFamilyCopy6$spouse <- NULL
+```
+
+```{r}
+commonClasses <- list()
+```
+
+```{r}
+# save three different atomic vectors
+commonClasses$character <- c("John", "Mary", "Bill")
+commonClasses$numeric <- c(2.3, 4, 7)
+commonClasses$logical <- c(TRUE, T, F, FALSE)
+```
+
+## factor
+```{r}
+bloodTypes <- c("AB", "AB", "A", "B", "A", "A", "B", "O", "O", "AB")
+```
+
+```{r}
+bloodTypes_fct <- 
+  factor(bloodTypes)
+bloodTypes_fct <-
+  factor(
+    c("AB", "AB", "A", "B", "A", "A", "B", "O", "O", "AB")
+  )
+```
+
+```{r}
+table(bloodTypes_fct)
+```
+
+```{r}
+table(bloodTypes)
+```
+
+```{r}
+levels(bloodTypes)
+```
+
+```{r}
+bloodTypes_fct_levelsSetup <- 
+  factor(bloodTypes, levels=c("A", "B", "O", "AB"))
+```
+
+```{r}
+class(bloodTypes_fct_levelsSetup)
+```
+
+```{r}
+table(bloodTypes_fct_levelsSetup)
+```
+
+```{r}
+household_income <- c("low income", "low income", "middle income", "low income", "high income", "middle income", "high income", "high income", "middle income", "middle income")
+```
+
+```{r}
+household_income_fct <- 
+  factor(household_income)
+levels(household_income_fct)
+```
+
+```{r}
+household_income_fct_levelsSetup <-
+  factor(household_income, levels = c("low income", "middle income", "high income"))
+levels(household_income_fct_levelsSetup)
+```
+
+```{r}
+table(household_income_fct_levelsSetup)
+```
+
+```{r}
+household_income_fct_levelsSetup[[1]]
+```
+
+```{r}
+household_income_fct_levelsSetup[[1]] <-
+  "middle income"
+```
+
+  *human said it is true
+```{r}
+household_income_fct_levelsSetup[[1]] < "low income"
+```
+
+   *human said it is false
+
+```{r}
+household_income_fct_levelsSetup_ordered <-
+  factor(
+    household_income, 
+    levels = c("low income", "middle income", "high income"),
+    ordered = T
+    )
+```
+
+```{r}
+class(household_income_fct_levelsSetup_ordered)
+```
+
+```{r}
+class(household_income_fct)
+class(household_income_fct_levelsSetup)
+```
+
+```{r}
+commonClasses$factor <- household_income_fct_levelsSetup
+class(commonClasses$factor)
+```
+
+```{r}
+install.packages("lubridate")
+```
+
+```{r}
+lubridate::ymd(c("2021/10/30", "2021-10-30", "2021 October 30", "2021 Oct. 30"))
+lubridate::ydm(c("2021/30/10", "2021-30-10", "2021 30 October", "2021 30 Oct."))
+lubridate::mdy(c("10/30/2021", "10-30-2021", "October 30, 2021", "Oct. 30, 2021"))
+lubridate::dmy(c("30/10/2021", "30-10-2021", "30 October, 2021", "30 Oct., 2021"))
+```
+
+```{r}
+dayInfo<- list()
+dayInfo$ymd <- c("2021/10/30", "2021/10/30", "2021 October,30", "2021, Oct. 30")
+class(dayInfo$ymd)
+lubridate::ymd(dayInfo$ymd) ->
+  dayInfo$ymd_parsed
+```
+
+```{r}
+commonClasses$date <- 
+lubridate::dmy(c("30/10/2021", "30-10-2021", "30 October, 2021", "30, Oct., 2021"))
+class(commonClasses$date)
+```
+
+```{r}
+dateTime_taipei <- 
+  lubridate::ymd_hms(
+    c("2021/10/30 13:22:52", "2021-10-31 1:22:52PM"),
+    tz = "Asia/Taipei")
+dateTime_taipei
+```
+
+```{r}
+dateTime_london <- 
+  lubridate::mdy_hm(
+    c("October 30, 2021, 23:10", "Oct. 30, 2021 11:10PM"),
+    tz="Europe/London")
+dateTime_london
+```
+
+```{r}
+c(
+  dateTime_taipei, #namecall
+  dateTime_london
+)
+```
+
+```{r}
+commonClasses$date_time <- c(
+  dateTime_taipei,
+  dateTime_london
+)
+class(commonClasses$date_time)
+```
+
+```{r}
+dateTime_london #namecall on date time London
+dateTime_london_atTaipei <-
+  lubridate::with_tz(
+    dateTime_london,
+    tz="Asia/Taipei"
+  )
+dateTime_london
+dateTime_london_atTaipei
+```
+
+```{r}
+lubridate::with_tz(
+  c("October 30, 2021, 23:10", "Oct. 30, 2021 1:10AM"),
+  tz="Asia/Taipei"
+) #wrong
+```
+
+```{r}
+customerExperience <- c('very happy','very happy','satisfied','satisfied','satisfied','very happy','bad','bad','satisfied','satisfied','bad','happy','happy','very happy','happy','happy','satisfied','very happy','very happy','satisfied','satisfied','very happy','satisfied','bad','very happy','very bad','very happy','bad','bad','very bad')
+```
+
+```{r}
+customerExperience_fct_levelsSetup <-
+  factor(customerExperience, levels = c('very happy','satisfied','happy','bad','very bad'))
+levels(customerExperience_fct_levelsSetup)
+```
+
+```{r}
+customerExperience_fct <- 
+  factor(customerExperience)
+customerExperience_fct <-
+  factor(
+    c('very happy','very happy','satisfied','satisfied','satisfied','very happy','bad','bad','satisfied','satisfied','bad','happy','happy','very happy','happy','happy','satisfied','very happy','very happy','satisfied','satisfied','very happy','satisfied','bad','very happy','very bad','very happy','bad','bad','very bad')
+  )
+```
+
+```{r}
+customerExperience_fct <- 
+  factor(customerExperience)
+levels(customerExperience_fct)
+```
+
+```{r}
+table(customerExperience_fct_levelsSetup)
+```
+
+```{r}
+customerExperience_fct_levelsSetup_ordered <-
+  factor(
+    customerExperience, 
+    levels = c('very happy','satisfied','happy','bad','very bad'),
+    ordered = T
+    )
+```
+
+```{r}
+subsidiaries <- list()
+subsidiaries$boston <- c("2020 Oct. 13 15:00:00", "2019 Apr. 10 09:30:00") # boston time zone
+subsidiaries$mykonos <- c("14 Jan., 2021 03:27:00", "8 Aug., 2020 11:20:00") # mykonos time zone
+```
+
+```{r}
+commonClasses$date <- 
+lubridate::ymd(c("2020 Oct. 13", "2019 Apr. 10", "2021 Jan 14", "2020 Aug 8"))
+class(commonClasses$date)
+```
+
+```{r}
+subsidiaries$boston <- 
+  lubridate::ymd_hms(
+    c("2020 Oct. 14 02:00:00", "2019 Apr. 10 21:00:00"),
+    tz = "America/USA")
+subsidiaries$boston
+```
+
+```{r}
+subsidiaries$mykonos <- 
+  lubridate::dmy_hms(
+    c("14 Jan., 2021 09:27:00", "8 Aug., 2020 17:20:00"),
+    tz="Europe/Greek")
+subsidiaries$mykonos
+```
+
+```{r}
+c(
+  subsidiaries$boston, #namecall
+  subsidiaries$mykonos
+)
+```
+
+```{r}
+commonClasses$date_time <- c(
+  subsidiaries$boston, #namecall
+  subsidiaries$mykonos
+)
+class(commonClasses$date_time)
+```
+
+```{r}
+  subsidiaries$mykonos 
+subsidiaries$mykonos_atIndia <-
+  lubridate::with_tz(
+    subsidiaries$mykonos,
+    tz="Asia/India"
+  )
+subsidiaries$mykonos
+subsidiaries$mykonos_atIndia
+```
+
+```{r}
+  subsidiaries$boston 
+subsidiaries$boston_atIndia <-
+  lubridate::with_tz(
+    subsidiaries$boston,
+    tz="Asia/India"
+  )
+subsidiaries$boston
+subsidiaries$boston_atIndia
+```
